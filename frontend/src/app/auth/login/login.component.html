@@ -1,0 +1,24 @@
+<div class="auth-container">
+
+  <div class="auth-card">
+
+    <h2>Iniciar sesión</h2>
+
+    <input type="email" placeholder="Correo"
+      [(ngModel)]="email" />
+
+    <input type="password" placeholder="Contraseña"
+      [(ngModel)]="password" />
+
+    <button (click)="login()">Ingresar</button>
+
+    <p style="color:red" *ngIf="error">{{ error }}</p>
+
+    <p class="link">
+      ¿No tienes cuenta?
+      <a (click)="goToRegister()">Crear cuenta</a>
+    </p>
+
+  </div>
+
+</div>

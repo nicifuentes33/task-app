@@ -1,0 +1,326 @@
+<div class="dashboard">
+
+  <!--  TOP BAR  -->
+  <div class="top-bar">
+
+    <!-- SEARCH -->
+    <input
+      type="text"
+      placeholder="Buscar tareas..."
+      [(ngModel)]="search"
+    />
+
+    <!-- FILTER STATUS -->
+    <select [(ngModel)]="filterStatus">
+
+      <option value="Todos">
+        Estado: Todos
+      </option>
+
+      <option value="Pendiente">
+        Pendiente
+      </option>
+
+      <option value="En progreso">
+        En progreso
+      </option>
+
+      <option value="Completado">
+        Completado
+      </option>
+
+    </select>
+
+    <!-- FILTER PRIORITY -->
+    <select [(ngModel)]="filterPriority">
+
+      <option value="Todas">
+        Prioridad: Todas
+      </option>
+
+      <option value="Alta">
+        Alta
+      </option>
+
+      <option value="Media">
+        Media
+      </option>
+
+      <option value="Baja">
+        Baja
+      </option>
+
+    </select>
+
+  </div>
+
+  <!--  BOARD  -->
+  <div class="board">
+
+
+    <!-- CREATE TASK / EDIT TASK -->
+
+
+    <div class="create-task">
+
+      <h3>
+        {{
+          editingTask
+          ? '✏ Editar tarea'
+          : '➕ Crear tarea'
+        }}
+      </h3>
+
+      <!-- TITLE -->
+      <input
+        type="text"
+        placeholder="Título"
+        [(ngModel)]="title"
+      />
+
+      <!-- DESCRIPTION -->
+      <textarea
+        placeholder="Descripción"
+        [(ngModel)]="description"
+      ></textarea>
+
+      <!-- DATE -->
+      <input
+        type="date"
+        [(ngModel)]="dueDate"
+      />
+
+      <!-- PRIORITY -->
+      <select [(ngModel)]="priority">
+
+        <option value="Baja">
+          Prioridad baja
+        </option>
+
+        <option value="Media">
+          Prioridad media
+        </option>
+
+        <option value="Alta">
+          Prioridad alta
+        </option>
+
+      </select>
+
+      <!-- CREATE / SAVE -->
+      <button
+        class="btn-create"
+        (click)="saveTask()"
+      >
+
+        {{
+          editingTask
+          ? 'Guardar cambios'
+          : 'Crear tarea'
+        }}
+
+      </button>
+
+      <!-- CANCEL EDIT -->
+      <button
+        *ngIf="editingTask"
+        class="more"
+        (click)="cancelEdit()"
+      >
+        Cancelar edición
+      </button>
+
+      <!-- LOGOUT -->
+      <button
+        class="btn-logout"
+        (click)="logout()"
+      >
+        Cerrar sesión
+      </button>
+
+    </div>
+
+
+    <!-- PENDIENTES -->
+
+
+    <div class="column">
+
+      <h3>🔴 Pendientes</h3>
+
+      <div
+        class="task-card"
+        *ngFor="
+          let task of getFilteredTasks('Pendiente')
+          | slice:0:pendingLimit
+        "
+      >
+
+        <h4>{{ task.title }}</h4>
+
+        <p>{{ task.description }}</p>
+
+        <small>
+          {{ task.dueDate }} | {{ task.priority }}
+        </small>
+
+        <!-- ACTIONS -->
+        <div class="actions">
+
+          <!-- NEXT STATUS -->
+          <button (click)="nextStatus(task)">
+            ➡
+          </button>
+
+          <!-- EDIT -->
+          <button (click)="loadTaskToEdit(task)">
+            ✏
+          </button>
+
+          <!-- DELETE -->
+          <button (click)="deleteTask(task._id)">
+            🗑
+          </button>
+
+        </div>
+
+      </div>
+
+      <!-- SHOW MORE / LESS -->
+      <button
+        class="more"
+        (click)="showMore('Pendiente')"
+      >
+
+        {{
+          pendingLimit >= getFilteredTasks('Pendiente').length
+          ? 'Ver menos'
+          : 'Ver más'
+        }}
+
+      </button>
+
+    </div>
+
+
+    <!-- EN PROGRESO -->
+
+
+    <div class="column">
+
+      <h3>🟡 En progreso</h3>
+
+      <div
+        class="task-card"
+        *ngFor="
+          let task of getFilteredTasks('En progreso')
+          | slice:0:progressLimit
+        "
+      >
+
+        <h4>{{ task.title }}</h4>
+
+        <p>{{ task.description }}</p>
+
+        <small>
+          {{ task.dueDate }} | {{ task.priority }}
+        </small>
+
+        <!-- ACTIONS -->
+        <div class="actions">
+
+          <!-- NEXT STATUS -->
+          <button (click)="nextStatus(task)">
+            ➡
+          </button>
+
+          <!-- EDIT -->
+          <button (click)="loadTaskToEdit(task)">
+            ✏
+          </button>
+
+          <!-- DELETE -->
+          <button (click)="deleteTask(task._id)">
+            🗑
+          </button>
+
+        </div>
+
+      </div>
+
+      <!-- SHOW MORE / LESS -->
+      <button
+        class="more"
+        (click)="showMore('En progreso')"
+      >
+
+        {{
+          progressLimit >= getFilteredTasks('En progreso').length
+          ? 'Ver menos'
+          : 'Ver más'
+        }}
+
+      </button>
+
+    </div>
+
+
+    <!-- COMPLETADO -->
+
+
+    <div class="column">
+
+      <h3>🟢 Completado</h3>
+
+      <div
+        class="task-card"
+        *ngFor="
+          let task of getFilteredTasks('Completado')
+          | slice:0:completedLimit
+        "
+      >
+
+        <h4>{{ task.title }}</h4>
+
+        <p>{{ task.description }}</p>
+
+        <small>
+          {{ task.dueDate }} | {{ task.priority }}
+        </small>
+
+        <!-- ACTIONS -->
+        <div class="actions">
+
+          <!-- EDIT -->
+          <button (click)="loadTaskToEdit(task)">
+            ✏
+          </button>
+
+          <!-- DELETE -->
+          <button (click)="deleteTask(task._id)">
+            🗑
+          </button>
+
+        </div>
+
+      </div>
+
+      <!-- SHOW MORE / LESS -->
+      <button
+        class="more"
+        (click)="showMore('Completado')"
+      >
+
+        {{
+          completedLimit >= getFilteredTasks('Completado').length
+          ? 'Ver menos'
+          : 'Ver más'
+        }}
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

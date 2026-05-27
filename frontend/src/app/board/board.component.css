@@ -1,0 +1,246 @@
+.dashboard {
+  background: radial-gradient(circle at top, #0f172a, #020617);
+  min-height: 100vh;
+  padding: 22px;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+/*  TOP BAR  */
+.top-bar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+
+.top-bar input {
+  flex: 2;
+  min-width: 320px;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  outline: none;
+  font-size: 15px;
+  background: #1e293b;
+  color: #f1f5f9;
+}
+
+.top-bar input:focus {
+  border: 1px solid #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59,130,246,0.2);
+}
+
+.top-bar select {
+  flex: 1;
+  min-width: 180px;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  outline: none;
+  font-size: 14px;
+  background: #1e293b;
+  color: #f1f5f9;
+}
+
+.top-bar select:focus {
+  border: 1px solid #3b82f6;
+}
+
+/* = BOARD  */
+.board {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding-bottom: 12px;
+}
+
+/* COLUMN BASE */
+.column {
+  flex: 0 0 280px;
+  padding: 16px;
+  border-radius: 16px;
+  min-height: 420px;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+  transition: 0.2s;
+}
+
+.column:hover {
+  transform: translateY(-2px);
+}
+
+/*  ORDEN CORRECTO  */
+/* 1 = Crear  */
+/* 2 = Pendiente 🔴 */
+.column:nth-child(2) {
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid #ef4444;
+}
+
+/* 3 = En progreso 🟡 */
+.column:nth-child(3) {
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid #f59e0b;
+}
+
+/* 4 = Completado 🟢 */
+.column:nth-child(4) {
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid #10b981;
+}
+
+.column h3 {
+  margin-bottom: 14px;
+  font-size: 17px;
+  color: #e2e8f0;
+}
+
+/* TASK CARD  */
+.task-card {
+  background: #ffffff;
+  color: #0f172a;
+  padding: 14px;
+  border-radius: 14px;
+  margin-bottom: 12px;
+  border: 2px solid transparent;
+  transition: 0.2s;
+}
+
+.task-card:hover {
+  transform: scale(1.02);
+}
+
+
+.column:nth-child(2) .task-card {
+  border-color: #ef4444;
+}
+
+.column:nth-child(3) .task-card {
+  border-color: #f59e0b;
+}
+
+.column:nth-child(4) .task-card {
+  border-color: #10b981;
+}
+
+/* TEXTO TASK */
+.task-card h4 {
+  margin: 0;
+  font-size: 15px;
+}
+
+.task-card p {
+  font-size: 13px;
+  color: #334155;
+}
+
+.task-card small {
+  display: block;
+  margin-top: 6px;
+  color: #64748b;
+}
+
+/*  ACTIONS  */
+.actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 6px;
+}
+
+.actions button {
+  cursor: pointer;
+  border: none;
+  padding: 6px 8px;
+  border-radius: 8px;
+  background: #e2e8f0;
+  color: #0f172a;
+  font-weight: bold;
+}
+
+.actions button:hover {
+  background: #cbd5e1;
+}
+
+.create-task {
+  flex: 0 0 280px;
+  background: #1e293b;
+  padding: 16px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* INPUTS */
+.create-task input,
+.create-task textarea,
+.create-task select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  background: #0f172a;
+  color: #f1f5f9;
+}
+
+.create-task textarea {
+  resize: none;
+  height: 80px;
+}
+
+/*  BOTÓN CREAR (PRO) */
+.btn-create {
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-create:hover {
+  transform: scale(1.03);
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+}
+
+/* LOGOUT (DENTRO DE LA CARD)*/
+.btn-logout {
+  margin-top: 8px;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  background: #ef4444;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-logout:hover {
+  background: #dc2626;
+  transform: scale(1.02);
+}
+
+/*  VER MÁS */
+.more {
+  width: 100%;
+  padding: 8px;
+  border: none;
+  border-radius: 10px;
+  background: #0f172a;
+  color: white;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.more:hover {
+  background: #1e293b;
+}
